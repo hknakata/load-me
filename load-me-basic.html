@@ -1,0 +1,166 @@
+<html>
+    <head>
+        <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="js/idle.js"></script>
+        <script type="text/javascript">
+            var conf = {
+                'idleTime': 60000, //milliseconds
+                'windowName': 'hof',
+                'imgPath': 'images/',
+                'initImg': 'images/0.jpg'
+            };
+
+            var clubs = [
+                {'id':'1', 'area': '08', 'name': 'Rotary E-Club of Tamar Hong Kong'},
+                {'id':'2', 'area': '06', 'name': 'Rotary Club of Tolo Harbour'},
+                {'id':'3', 'area': '06', 'name': 'Rotary Club of Hong Kong Sunrise'},
+                {'id':'4', 'area': '06', 'name': 'Rotary Club of Shatin'},
+                {'id':'5', 'area': '04', 'name': 'Rotary Club of SoHo Hong Kong'},
+                {'id':'6', 'area': '06', 'name': 'Rotary Club of Guangdong-HK-Macau Greater Bay Area'},
+                {'id':'7', 'area': '05', 'name': 'Rotary Club of The Peak'},
+                {'id':'8', 'area': '08', 'name': 'Rotary Club of Manhattan Hong kong'},
+                {'id':'9', 'area': '01', 'name': 'Rotary Club of Guia'},
+                {'id':'10', 'area': '02', 'name': 'Rotary Club of Wanchai'},
+                {'id':'11', 'area': '01', 'name': 'Rotary Club of Hou Kuong'},
+                {'id':'12', 'area': '07', 'name': 'Rotary Club of Peninsula South'},
+                {'id':'13', 'area': '06', 'name': 'Rotary Club of Mandarin'},
+                {'id':'14', 'area': '03', 'name': 'Rotary Club of Hong Kong Northeast'},
+                {'id':'15', 'area': '05', 'name': 'Rotary Club of Green Hong Kong'},
+                {'id':'16', 'area': '04', 'name': 'Rotary Club of Lan Kwai Fong'},
+                {'id':'17', 'area': '01', 'name': 'Rotary Club of Oriental Pearl Macau'},
+                {'id':'18', 'area': '06', 'name': 'Rotary Club of New Territories'},
+                {'id':'19', 'area': '11', 'name': 'Rotary Club of Metropolitan Hong Kong'},
+                {'id':'20', 'area': '06', 'name': 'Rotary Club of Kwai Chung'},
+                {'id':'21', 'area': '01', 'name': 'Rotary Club of Penha Macao'},
+                {'id':'22', 'area': '03', 'name': 'Rotary Club of Hong Kong Harbour'},
+                {'id':'23', 'area': '06', 'name': 'Rotary Satellite Club of Tolo Harbour - Happy Health'},
+                {'id':'24', 'area': '02', 'name': 'Rotary Club of Hong Kong'},
+                {'id':'25', 'area': '05', 'name': 'Rotary Club of Mid-level'},
+                {'id':'26', 'area': '11', 'name': 'Rotary Club of Neoteric Hong Kong'},
+                {'id':'27', 'area': '01', 'name': 'Rotary Club of Macau'},
+                {'id':'28', 'area': '02', 'name': 'Rotary Club of Innovation Hong Kong'},
+                {'id':'29', 'area': '07', 'name': 'Rotary Club of Peninsula'},
+                {'id':'30', 'area': '01', 'name': 'Rotary Club of Macau Central'},
+                {'id':'31', 'area': '01', 'name': 'Rotary Club of Amizade Macao'}
+            ];
+
+            function changeTheWindowURL(url, type) {
+                if (type == 'img') {
+                    console.log('url: '+url);
+                    var theImage = new Image();
+                    theImage.src = url;
+                    var winWidth = theImage.width + 20;
+                    var winHeight = theImage.height + 20;
+
+                    console.log("theImage.width: "+ theImage.width + ", theImage.height: "+theImage.height);
+                    console.log("winWidth: "+ winWidth + ", winHeight: "+winHeight);
+
+                    window.open(url, conf.windowName, 'height=' + winHeight + ', width=' + winWidth + ', toolbar=0, location=0, status=0, scrollbars=0, resizable=0');
+                } else {
+                    window.open(url, conf.windowName);
+                }
+            }
+
+            function showHOF() {
+                var clubId = $('#clubList').val();
+                console.log(clubId);
+                changeTheWindowURL(conf.imgPath + clubId +'.jpg', 'img');
+            }
+
+            function getAreas() {
+                var unique = [];
+                var distinct = [];
+
+                for( let i = 0; i < clubs.length; i++ ){
+                    if( !unique[clubs[i].area]){
+                        distinct.push(clubs[i].area);
+                        unique[clubs[i].area] = 1;
+                    }
+                }
+
+                distinct.sort();
+
+                return distinct;
+            }
+
+            function filterByArea(areaId) {
+                return function(item) {
+                    return item.area == areaId;
+                }
+            }
+
+
+            function loadClubList(areaId) {
+                var filterClubs = [];
+
+                if (areaId) {
+                    //load specific area
+                    filterClubs = clubs.filter(filterByArea(areaId));
+                } else {
+                    //load all
+                    filterClubs = clubs;
+                }
+
+                console.log(filterClubs.length);
+                $('#clubList').find('option').remove().end(); //reset select list
+                $('#clubList').append($("<option />").val('0').text('-- Select a club --'));
+                $.each(filterClubs, function() {
+                    console.log(this.id + ': ' + this.name);
+                    $("#clubList").append($("<option />").val(this.id).text(this.name));
+                });
+                
+            }
+
+            function loadClubListSelect(selectObj) {
+                loadClubList(selectObj.value);
+                console.log('selected area: '+selectObj.value);
+            }
+
+            $(document).ready(function() {
+                
+                var areas = getAreas();
+                console.log(areas.length);
+                $.each(areas, function() {
+                    console.log(this);
+                    $("#areaList").append($("<option />").val(this).text('Area '+this));
+                }); 
+
+                loadClubList(0);
+
+                $( document ).on( "idle.idleTimer", function(event, elem, obj){
+                    $("#state").html("idle");
+                    console.log('idle');
+                    changeTheWindowURL('slideshow.html', 'html');
+                });
+                
+                $( document ).on( "active.idleTimer", function(event, elem, obj, triggerevent){
+                    $("#state").html("active");
+                    changeTheWindowURL(conf.initImg, 'img');
+                });
+                
+                $.idleTimer(conf.idleTime);
+
+                changeTheWindowURL(conf.initImg, 'img');
+                
+            });
+
+        </script>
+    </head>
+    <body>
+        <h1>Station</h1>
+        Current state: <span style="font-weight:bold;" id="state">active</span>
+        <p>
+            <div>Area</div>
+            <select id="areaList" onchange="loadClubListSelect(this)">
+                <option value="0" selected>-- Select a area --</option>
+            </select>
+        </p>
+        <p>
+            <div>Club</div>
+            <select id="clubList" onchange="showHOF()">
+                <option value="0" selected>-- Select a club --</option>
+            </select>
+        </p>
+        
+    </body>
+</html>

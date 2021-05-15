@@ -1,0 +1,53 @@
+<html>
+    <head> 
+        <link href="styles/jquery-ui.theme.css" type="text/css" media="all" rel="stylesheet" />
+        <link href="node_modules/skitter-slider/dist/skitter.css" type="text/css" media="all" rel="stylesheet" />
+        <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.js"></script>
+        <script type="text/javascript" src="node_modules/skitter-slider/dist/jquery.skitter.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('.skitter-large').skitter({'fullscreen':true, 'interval':5000, 'label':false, 'show_randomly':true});
+            });
+        </script>
+    </head>
+    <body>
+        <div class="skitter skitter-large with-dots">
+            <ul>
+              <li>
+                <a href="#cut">
+                  <img src="images/1.jpg" class="cut" />
+                </a>
+                <div class="label_text">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    <a href="#see-more" class="btn btn-xs btn-warning">See more</a>
+                  </p>
+                </div>
+              </li>
+              <li>
+                <a href="#swapBlocks">
+                  <img src="images/2.jpg" class="swapBlocks" />
+                </a>
+                <div class="label_text">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    <a href="#see-more" class="btn btn-xs btn-warning">See more</a>
+                  </p>
+                </div>
+              </li>
+              <li>
+                <a href="#swapBarsBack">
+                  <img src="images/1.jpg" class="swapBarsBack" />
+                </a>
+                <div class="label_text">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    <a href="#see-more" class="btn btn-xs btn-warning">See more</a>
+                  </p>
+                </div>
+              </li>
+            </ul>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="js/idle.js"></script>
+        <script type="text/javascript">
+            (function ($) {
+      
+                $( document ).on( "idle.idleTimer", function(event, elem, obj){
+                    $("#state").html("idle");
+                });
+                
+                $( document ).on( "active.idleTimer", function(event, elem, obj, triggerevent){
+                    $("#state").html("active");
+                });
+                
+                $.idleTimer(3000);
+                
+            })(jQuery);
+
+            
+        </script>
+    </head>
+    <body>
+        <h1>Idle JS</h1>
+        <span id="state">active</span>
+    </body>
+</html>
