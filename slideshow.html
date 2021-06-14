@@ -5,49 +5,26 @@
         <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
         <script type="text/javascript" src="js/jquery-ui.js"></script>
         <script type="text/javascript" src="node_modules/skitter-slider/dist/jquery.skitter.js"></script>
+        <script type="text/javascript" src="js/data.js"></script>
         <script type="text/javascript">
             $(function() {
+                //prepare the slideshow data
+                var effects = ['cut', 'swapBlocks', 'swapBarsBack'];
+                var list = $('.skitter-large').append('<ul></ul>').find('ul');
+                for (var i = 0; i < clubs.length; i++) {
+                  var effect = effects[i%3];
+                  var club = clubs[i];
+                  var clubName = club.name.replace(/ +/g, '-');
+                  console.log(clubName);
+                  list.append('<li><a href="#'+effect+'"><img src="images/'+clubName+'.jpg" class="'+effect+'" /></a></li>')
+                }
+                
+                //load the slidesow
                 $('.skitter-large').skitter({'fullscreen':true, 'interval':5000, 'label':false, 'show_randomly':true});
             });
         </script>
     </head>
     <body>
-        <div class="skitter skitter-large with-dots">
-            <ul>
-              <li>
-                <a href="#cut">
-                  <img src="images/1.jpg" class="cut" />
-                </a>
-                <div class="label_text">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    <a href="#see-more" class="btn btn-xs btn-warning">See more</a>
-                  </p>
-                </div>
-              </li>
-              <li>
-                <a href="#swapBlocks">
-                  <img src="images/2.jpg" class="swapBlocks" />
-                </a>
-                <div class="label_text">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    <a href="#see-more" class="btn btn-xs btn-warning">See more</a>
-                  </p>
-                </div>
-              </li>
-              <li>
-                <a href="#swapBarsBack">
-                  <img src="images/1.jpg" class="swapBarsBack" />
-                </a>
-                <div class="label_text">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    <a href="#see-more" class="btn btn-xs btn-warning">See more</a>
-                  </p>
-                </div>
-              </li>
-            </ul>
-        </div>
+        <div class="skitter skitter-large with-dots"></div>
     </body>
 </html>
