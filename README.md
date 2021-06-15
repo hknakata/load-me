@@ -7,8 +7,11 @@ Install npm before installing the application, you may refer to guides below:
 
 ## Installation
 
-1. Download the source
-2. Install the application
+1. Download the source, by downloading the zip (and unzip) via github.com or using git command
+
+> git -clone https://github.com/hknakata/load-me.git
+
+3. Install the application
 
 >npm install
 
